@@ -1,0 +1,29 @@
+@isTest
+private class TriggeErrorTest
+{
+
+    private static testmethod void testTriggerErrorM1()
+    {
+        List<Account> l = new List<Account>();
+        try
+        {
+        Account a1 =  new Account(Name = 'Test TriggeErrorTest');
+        Account a2 =  new Account(Name = 'Test TriggeErrorTest');
+        
+        l.add(a1);
+        l.add(a2);
+        insert l;
+        }
+        catch(Exception e)
+        {
+            
+        }
+        
+        l = [Select Name from Account where id in: l];
+        system.debug(' ******** l : ' + l);// This list will be empty
+        system.debug('***** Contact :  ' + [Select Name, Id from Contact where lastName = 'Test exceptionHandling rollBack']);// This Contact Query will not return any rows
+    
+    }
+
+
+}
